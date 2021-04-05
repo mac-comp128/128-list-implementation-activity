@@ -154,13 +154,13 @@ public class ListTest {
         }
         try {
             theList.remove(3);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             assertEquals(e.getMessage(), "The index 3 is out of bounds for this " + listType);
         }
 
         try {
             theList.remove(6);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             assertEquals(e.getMessage(), "The index 6 is out of bounds for this " + listType);
         }
     }
