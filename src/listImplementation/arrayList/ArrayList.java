@@ -67,11 +67,10 @@ public class ArrayList<T> implements ListADT<T>
 	}
 
 	/**
-	 * Adds the specified element at the position given by index.
-	 * The front of the list is position 0.
+	 * Adds the specified element after the first instance of the target in the list
 	 * Throws an ElementNotFoundException if the target is not found.
 	 *
-	 * @param element the element to be added at the index
+	 * @param element the element to be added
 	 * @param target  the target that the element is to be added after
 	 */
 	public void addAfter(T element, T target)
