@@ -87,4 +87,12 @@ public interface ListADT<T>
 	 * @return a string representation of this list
 	 */
 	public String toString();
+
+	/**
+	 * Returns the element at position index
+	 * 
+	 * @param index of the target element
+	 * @return the element
+	 */
+	public T get(int index);
 }

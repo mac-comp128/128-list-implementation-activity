@@ -2,6 +2,7 @@ package listImplementation;
 
 import listImplementation.arrayList.ArrayList;
 import listImplementation.exceptions.ElementNotFoundException;
+import listImplementation.exceptions.IndexOutOfBoundsException;
 import listImplementation.linkedList.LinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.*;
@@ -41,6 +42,8 @@ public class ListTest {
         testAddAtIndex(lList);
         lList = new LinkedList<String>();
         testRemoveAtIndex(lList);
+        lList = new LinkedList<String>();
+        testSubList(lList);
     }
 
     /*
@@ -163,5 +166,42 @@ public class ListTest {
         } catch (Exception e) {
             assertEquals(e.getMessage(), "The index 6 is out of bounds for this " + listType);
         }
+    }
+
+    public void testSubList(LinkedList<String> theList){
+        System.out.println("Test subList() ========================");
+        theList.add("alpha");
+        theList.add("beta");
+        theList.add("chicago");
+        theList.add("delta");
+        theList.add("echo");
+
+        System.out.println(theList);
+        try{
+            theList.subList(2, 0);
+        } catch (IndexOutOfBoundsException ex){
+            assertEquals(ex.getMessage(), "The index 2 is out of bounds for this LinkedList");
+        }
+        try{
+            theList.subList(0, 6);
+        } catch (IndexOutOfBoundsException ex){
+            assertEquals(ex.getMessage(), "The index 6 is out of bounds for this LinkedList");
+        }
+        LinkedList<String> subList = theList.subList(1, 4);
+        assertEquals(3, subList.size());
+        assertEquals("beta", subList.get(0));
+        assertEquals("chicago", subList.get(1));
+        assertEquals("delta", subList.get(2));
+        assertFalse(subList.contains("alpha"));
+        assertFalse(subList.contains("echo"));
+
+        assertEquals("5 elements (front to back): alpha beta chicago delta echo", theList.toString());
+
+        LinkedList<String> subList2 = theList.subList(0, 5);
+        assertEquals("5 elements (front to back): alpha beta chicago delta echo", subList2.toString());
+
+        //Empty sublist
+        LinkedList<String> subList3 = theList.subList(2, 2);
+        assertEquals(0, subList3.size());
     }
 }

@@ -24,6 +24,18 @@ public class LinkedList<T> implements ListADT<T>
 		count = 0;
 		head = tail = null;
 	}
+
+	/**
+	 * Used to construct a sublist of an existing list.
+	 * @param head
+	 * @param tail
+	 * @param count
+	 */
+	private LinkedList(LinearNode<T> head, LinearNode<T> tail, int count){
+		this.count = count;
+		this.head = head;
+		this.tail = tail;
+	}
 	
 
 	/**
@@ -249,7 +261,7 @@ public class LinkedList<T> implements ListADT<T>
 	{
 		LinearNode<T> current = head;
 		int index = 0;
-		while (current != null) {
+		while (current != tail.getNext()) {
 			if (target == current.getElement()){
 				return index;
 			}
@@ -300,7 +312,66 @@ public class LinkedList<T> implements ListADT<T>
 		return returnStr.toString().trim();  // easy way to get rid of the last space at the end
 	}
 
+	/**
+	 * Returns the element at position index
+	 * 
+	 * @param index of the target element
+	 * @return the element
+	 */
+	@Override
+	public T get(int index){
+		// if index is off current end, then throw IndexOutOfBoundsException
+		if (index >= count || index < 0) {
+			throw new IndexOutOfBoundsException("LinkedList", index);
+		}
 
+		LinearNode<T> current = head;
+		int curIndex = 0;
+		while (curIndex != index) {
+			curIndex++;
+			current = current.getNext();
+		}
+		return current.getElement();
+	}
+
+	/**
+	 * Returns a view of the portion of this list between the specified fromIndex, inclusive, and toIndex, exclusive.
+	 * (If fromIndex and toIndex are equal, the returned list is empty.) The returned list is backed by this list, 
+	 * so non-structural changes in the returned list are reflected in this list, and vice-versa. The returned list
+	 * supports all of the optional list operations supported by this list.
+	 * 
+	 * @param fromIndex low endpoint (inclusive) of the subList
+	 * @param toIndex high endpoint (exclusive) of the subList
+	 * @return a view of the specified range within this list
+	 * @throws IndexOutOfBoundsException - for an illegal endpoint index value (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
+	 */
+	public LinkedList<T> subList(int fromIndex, int toIndex){
+
+		//TODO: find and fix the bug in this method by setting breakpoints in the test case.
+
+		if (fromIndex < 0 || fromIndex > toIndex){
+			throw new IndexOutOfBoundsException("LinkedList", fromIndex);
+		}
+		else if (toIndex > size()){
+			throw new IndexOutOfBoundsException("LinkedList", toIndex);
+		}
+
+		LinearNode<T> current = head;
+		int index = 0;
+		while (index < fromIndex) {
+			index++;
+			current = current.getNext();
+		}
+		LinearNode<T> subHead = current;
+		while (index < toIndex) {
+			index++;
+			current = current.getNext();
+		}
+		LinearNode<T> subTail = current;
+
+		return new LinkedList<>(subHead, subTail, toIndex-fromIndex);
+
+	}
 }
 
 

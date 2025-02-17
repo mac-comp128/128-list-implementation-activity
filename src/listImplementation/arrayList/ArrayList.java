@@ -291,6 +291,18 @@ public class ArrayList<T> implements ListADT<T>
 		return returnStr.toString().trim();  // easy way to get rid of the last space at the end
 	}
 
-
-
+	/**
+	 * Returns the element at position index
+	 * 
+	 * @param index of the target element
+	 * @return the element
+	 */
+	@Override
+	public T get(int index){
+		// if index is off current end, then throw IndexOutOfBoundsException
+		if (index >= rear || index < 0) {
+			throw new IndexOutOfBoundsException("ArrayList", index);
+		}
+		return list[index];
+	}
 }
